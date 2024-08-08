@@ -7,11 +7,11 @@ import { SSO_NEXT_EP } from "../constants";
 export function Link({ children, ...rest }) {
   const [loading, setLoading] = useState(false);
 
-  const redirectUri = rest?.["data-redirect_uri"];
-  const userType = rest?.["data-user_type"];
+  const redirectUri = rest?.["data-redirecturi"];
+  const userType = rest?.["data-usertype"];
   const token = rest?.["data-token"];
 
-  const url = `${SSO_NEXT_EP}?redirect_uri=${redirectUri}&source=${userType}&token=${token}`;
+  const url = `${SSO_NEXT_EP}?redirect_uri=${redirectUri}&userType=${userType}&token=${token}`;
 
   return (
     <a

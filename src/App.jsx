@@ -27,36 +27,36 @@ export function App() {
         </p>
 
         <Link
-          data-redirect_uri={REDIRECT_URI}
-          data-user_type={"insured"}
+          data-redirecturi={REDIRECT_URI}
+          data-usertype={"insured"}
           data-token={token}
         >
           Asegurado
         </Link>
         <Link
-          data-redirect_uri={REDIRECT_URI}
-          data-user_type={"broker"}
+          data-redirecturi={REDIRECT_URI}
+          data-usertype={"broker"}
           data-token={token}
         >
           Corredor
         </Link>
         <Link
-          data-redirect_uri={REDIRECT_URI}
-          data-user_type={"delegate"}
+          data-redirecturi={REDIRECT_URI}
+          data-usertype={"delegate"}
           data-token={token}
         >
           Delegado
         </Link>
         <Link
-          data-redirect_uri={REDIRECT_URI}
-          data-user_type={"company"}
+          data-redirecturi={REDIRECT_URI}
+          data-usertype={"company"}
           data-token={token}
         >
           Empresa
         </Link>
         <Link
-          data-redirect_uri={REDIRECT_URI}
-          data-user_type={"ldap"}
+          data-redirecturi={REDIRECT_URI}
+          data-usertype={"ldap"}
           data-token={token}
         >
           LDAP
