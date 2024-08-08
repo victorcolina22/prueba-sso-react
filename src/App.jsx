@@ -61,6 +61,13 @@ export function App() {
         >
           LDAP
         </Link>
+        <Link
+          data-redirecturi={REDIRECT_URI}
+          data-usertype={"insurable"}
+          data-token={token}
+        >
+          Asegurable
+        </Link>
       </Container>
     </section>
   );
