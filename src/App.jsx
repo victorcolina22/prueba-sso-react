@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 
 import { Container } from "./components/Container";
 import { Link } from "./components/Link";
+import { useEffect } from "react";
 
 const REDIRECT_URI = "http://localhost:5173";
 const token = "";
@@ -10,6 +11,29 @@ const rut = "";
 
 export function App() {
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (pathname === "/") return;
+
+    getSessionToken(pathname).then((response) => {
+      console.log(response);
+    });
+  }, [pathname]);
+
+  async function getSessionToken(uuid) {
+    const response = await fetch(
+      "http://localhost:3001/v1/auth/session-token",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ uuid }),
+      },
+    );
+
+    return response.json();
+  }
   console.log({ pathname });
   return (
     <section className="flex flex-col items-center justify-center h-screen">
