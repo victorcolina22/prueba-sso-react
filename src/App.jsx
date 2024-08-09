@@ -1,8 +1,8 @@
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import { Container } from "./components/Container";
 import { Link } from "./components/Link";
-import { useEffect } from "react";
 
 const REDIRECT_URI = "http://localhost:5173";
 const token = "";
@@ -12,13 +12,18 @@ const rut = "";
 export function App() {
   const { pathname } = useLocation();
 
+  const [state, setState] = useState();
+
   useEffect(() => {
     if (pathname === "/") return;
+    if (typeof state === "object" && Object.keys(state).length > 0) return;
 
-    getSessionToken(pathname).then((response) => {
-      console.log(response);
+    const sessionToken = pathname.split("/").at(-1);
+    getSessionToken(sessionToken).then((response) => {
+      if (!response.data) return;
+      setState(response.data);
     });
-  }, [pathname]);
+  }, [state]);
 
   async function getSessionToken(uuid) {
     const response = await fetch(
@@ -34,7 +39,7 @@ export function App() {
 
     return response.json();
   }
-  console.log({ pathname });
+
   return (
     <section className="flex flex-col items-center justify-center h-screen">
       <Container id="container">
@@ -42,10 +47,10 @@ export function App() {
 
         <p className="flex flex-col">
           <span id="name" data-name={name}>
-            Nombre: {name}
+            Nombre: {state?.name ?? ""}
           </span>
           <span id="rut" data-rut={rut}>
-            Rut: {rut}
+            Rut: {state?.rut ?? ""}
           </span>
           <span id="token" data-token={token}></span>
         </p>
