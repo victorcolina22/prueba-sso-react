@@ -1,44 +1,19 @@
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-
+// Components
 import { Container } from "./components/Container";
 import { Link } from "./components/Link";
 
-const REDIRECT_URI = "http://localhost:5173";
+// Services
+import { useSession } from "./hooks/useSession";
+
+// Constants
+import { REDIRECT_URI } from "./constants";
+
 const token = "";
 const name = "";
 const rut = "";
 
 export function App() {
-  const { pathname } = useLocation();
-
-  const [state, setState] = useState();
-
-  useEffect(() => {
-    if (pathname === "/") return;
-    if (typeof state === "object" && Object.keys(state).length > 0) return;
-
-    const sessionToken = pathname.split("/").at(-1);
-    getSessionToken(sessionToken).then((response) => {
-      if (!response.data) return;
-      setState(response.data);
-    });
-  }, [state]);
-
-  async function getSessionToken(uuid) {
-    const response = await fetch(
-      "http://localhost:3001/v1/auth/session-token",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ uuid }),
-      },
-    );
-
-    return response.json();
-  }
+  const { sessionData } = useSession();
 
   return (
     <section className="flex flex-col items-center justify-center h-screen">
@@ -47,10 +22,10 @@ export function App() {
 
         <p className="flex flex-col">
           <span id="name" data-name={name}>
-            Nombre: {state?.name ?? ""}
+            Nombre: {sessionData?.name ?? ""}
           </span>
           <span id="rut" data-rut={rut}>
-            Rut: {state?.rut ?? ""}
+            Rut: {sessionData?.rut ?? ""}
           </span>
           <span id="token" data-token={token}></span>
         </p>
